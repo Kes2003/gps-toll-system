@@ -2,7 +2,8 @@
 
 The car's GPS position is sampled as it drives. The first toll zone it enters is
 registered as the entry point and the last one as the exit point; the toll is
-the distance driven between them multiplied by the per-km rate.
+the distance driven between them multiplied by the per-km rate for the car's
+vehicle class (see ``gps_toll.rates``).
 """
 
 from __future__ import annotations
@@ -16,6 +17,7 @@ from typing import Generator, List, Optional, Sequence
 import simpy
 
 from gps_toll.models import Car, Coordinate, Highway, TollCrossing, TollPoint
+from gps_toll.rates import DEFAULT_VEHICLE_CLASS, VehicleClass
 
 logger = logging.getLogger(__name__)
 
@@ -25,7 +27,6 @@ BANGALORE: Coordinate = (12.9716, 77.5946)
 # Toll points at 30%, 50% and 70% of the way along the highway.
 DEFAULT_TOLL_FRACTIONS = (0.3, 0.5, 0.7)
 DEFAULT_TOLL_RADIUS_KM = 1.0
-DEFAULT_TOLL_RATE_PER_KM = 0.25  # INR
 MIN_SPEED_KMH = 50.0
 MAX_SPEED_KMH = 100.0
 
@@ -81,6 +82,7 @@ class TripResult:
     def summary(self) -> str:
         lines = [
             f"Route: {self.highway.start_name} -> {self.highway.end_name} ({self.distance_km:.2f} km)",
+            f"Vehicle: {self.car.vehicle_class.name}",
             f"Speed: {self.car.speed_kmh:.2f} km/h, travel time: {format_duration(self.duration_min)}",
         ]
         for crossing in self.crossings:
@@ -151,8 +153,11 @@ def run_simulation(
     car: Car,
     highway: Highway,
     toll_points: Sequence[TollPoint],
-    toll_rate_per_km: float = DEFAULT_TOLL_RATE_PER_KM,
+    toll_rate_per_km: Optional[float] = None,
 ) -> TripResult:
+    """Run the trip. ``toll_rate_per_km`` defaults to the rate for the car's vehicle class."""
+    if toll_rate_per_km is None:
+        toll_rate_per_km = car.vehicle_class.rate_per_km
     if toll_rate_per_km < 0:
         raise ValueError(f"toll_rate_per_km must not be negative, got {toll_rate_per_km}")
 
@@ -176,11 +181,13 @@ def default_toll_points(highway: Highway, radius_km: float = DEFAULT_TOLL_RADIUS
 
 def simulate_default_trip(
     speed_kmh: Optional[float] = None,
-    toll_rate_per_km: float = DEFAULT_TOLL_RATE_PER_KM,
+    vehicle_class: VehicleClass = DEFAULT_VEHICLE_CLASS,
+    toll_rate_per_km: Optional[float] = None,
     rng: Optional[random.Random] = None,
 ) -> TripResult:
-    """Simulate one car on the Coimbatore -> Bangalore highway. A random speed is used if none is given."""
+    """Simulate one vehicle on the Coimbatore -> Bangalore highway. A random speed is used if none is given."""
     if speed_kmh is None:
         speed_kmh = (rng or random).uniform(MIN_SPEED_KMH, MAX_SPEED_KMH)
     highway = default_highway()
-    return run_simulation(Car(1, speed_kmh), highway, default_toll_points(highway), toll_rate_per_km)
+    car = Car(1, speed_kmh, vehicle_class)
+    return run_simulation(car, highway, default_toll_points(highway), toll_rate_per_km)

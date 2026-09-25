@@ -7,6 +7,8 @@ from typing import Tuple
 
 import geopy.distance
 
+from gps_toll.rates import DEFAULT_VEHICLE_CLASS, VehicleClass
+
 # (latitude, longitude) in decimal degrees.
 Coordinate = Tuple[float, float]
 
@@ -56,7 +58,7 @@ class TollPoint:
 class Car:
     car_id: int
     speed_kmh: float
-    vehicle_type: str = "Car"
+    vehicle_class: VehicleClass = DEFAULT_VEHICLE_CLASS
 
     def __post_init__(self) -> None:
         if self.speed_kmh <= 0:

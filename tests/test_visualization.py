@@ -33,3 +33,11 @@ def test_cli_run(tmp_path, capsys):
     assert "Total toll amount" in output
     assert "Transaction ID" in output
     assert (tmp_path / "map.html").exists()
+
+
+def test_cli_vehicle_option(tmp_path, capsys):
+    main.main(["--cli", "--speed", "80", "--vehicle", "bus", "--map-file", str(tmp_path / "map.html")])
+
+    output = capsys.readouterr().out
+    assert "Vehicle: Bus / Truck (2 axles)" in output
+    assert "@ 5.08 INR/km" in output
