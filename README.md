@@ -421,5 +421,8 @@ The tests cover:
 
 ## Presentation
 
-The project presentation (problem statement, solution, process flow, architecture and team
-contributions) is in [`docs/presentation.pptx`](docs/presentation.pptx).
+[`docs/presentation.pptx`](docs/presentation.pptx) is a 17-slide, 16:9 deck with speaker
+notes on every slide. It covers the problem, the solution and how it works, the real route and
+plaza data, worked examples and fleet results, the application, the architecture, the tech
+stack, the team and the roadmap. Its charts are native PowerPoint charts, so they stay editable.
+Before presenting, replace "Team Member 1" to "Team Member 4" on the team slide with your names.
