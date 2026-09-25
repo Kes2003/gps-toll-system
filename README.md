@@ -17,6 +17,14 @@ saved to a SQLite history.
 
 ![GPS Toll Simulation GUI](docs/screenshots/gui.png)
 
+## Quick start
+
+```bash
+pip install -r requirements.txt
+python main.py                          # GUI
+python main.py --cli --traffic 10       # terminal: your car plus 10 other vehicles
+```
+
 ## Contents
 
 - [Problem statement](#problem-statement)
@@ -28,7 +36,7 @@ saved to a SQLite history.
 - [Project structure](#project-structure)
 - [Running the tests](#running-the-tests)
 - [Tech stack](#tech-stack)
-- [Limitations](#limitations)
+- [Limitations and possible extensions](#limitations-and-possible-extensions)
 - [Data sources and attribution](#data-sources-and-attribution)
 - [Presentation](#presentation)
 
@@ -196,7 +204,7 @@ pip install -r requirements.txt
 ```
 
 The route and toll plaza data ship with the repository, so no internet connection is needed
-to run the simulation. The browser map does load its map tiles online.
+to run the simulation. The browser map loads its map tiles and scripts online.
 
 ## Usage
 
@@ -207,14 +215,15 @@ python main.py
 ```
 
 1. Choose the **vehicle type**, **from** and **to** towns, the number of **other traffic**
-   vehicles, the **GPS noise**, and whether the vehicle has a **National Permit**.
+   vehicles (up to 50), the **GPS noise**, and whether the vehicle has a **National Permit**
+   (it switches on automatically for 3-axle and larger vehicles).
 2. **Start Simulation** runs every vehicle at once. Results appear in the table, with your
    vehicle first and in bold.
 3. Click a vehicle in the table to see its toll breakdown below.
 4. **End Simulation** opens the charts (route, traffic, toll by plaza) and the map in your
    browser for the selected vehicle.
 5. **Toll Bill** shows the selected vehicle's receipt.
-6. **Trip History** lists all saved trips, with totals.
+6. **Trip History** lists the latest 200 saved trips, with totals for all of them.
 
 ### Command line
 
@@ -282,6 +291,19 @@ Map saved to /path/to/gps-toll-system/car_path_map.html
 
 All options except `--cli`, `--history` and `--plots-dir` also set the GUI's starting values.
 
+### Interactive map
+
+**End Simulation** saves `car_path_map.html` and opens it in your browser; a `--cli` run
+saves it without opening it. On the map:
+
+- **Toll zones** are drawn in orange along the road. Click a zone or its plaza marker to see
+  that plaza's fee for every vehicle class, its per-km rate, its tollable length and its
+  zone on the route.
+- **Vehicle tracks** show each vehicle's GPS fixes, one layer per vehicle. The selected
+  vehicle is shown; turn the others on in the layer control (top right).
+- **Entry and exit points** in each toll zone are marked with filled and hollow circles.
+  Hover over one to see the km and time.
+
 ### Trip history
 
 Every simulated trip is saved to `trips.db`, one row per vehicle trip. It holds the vehicle,
@@ -336,7 +358,7 @@ flowchart TD
     models --> rates[rates.py]
     store --> bill[billing.py]
     gui --> bill
-    models --> data[("data/*.json")]
+    sim --> data[("data/*.json")]
 ```
 
 ### Updating the route
@@ -376,16 +398,15 @@ The tests cover:
 | GUI | Tkinter (standard library) |
 | Tests | [pytest](https://docs.pytest.org/) |
 
-## Limitations
+## Limitations and possible extensions
 
-- Vehicles drive one way only, from Coimbatore towards Bangalore.
-- Official toll section boundaries aren't in the published data. Each zone is the plaza's
-  tollable length centred on the plaza, with overlaps split between neighbours.
-- The 20 km free distance is applied per trip. It isn't tracked per vehicle per day across
-  several trips.
-- Fees are a snapshot (see the *Fees from* column). NHAI revises them every year.
-- Speeds vary randomly but don't model congestion, stops or queues. GPS error is normally
-  distributed, with no signal loss or multipath.
+| Limitation | Possible extension |
+| --- | --- |
+| Vehicles drive one way only, from Coimbatore towards Bangalore. | Reverse the route for Bangalore → Coimbatore trips. |
+| Official toll section boundaries aren't in the published data. Each zone is the plaza's tollable length centred on the plaza, with overlaps split between neighbours. | Load each plaza's official section start and end chainage when they're available. |
+| The 20 km free distance is applied per trip, not per vehicle per day. | Look up the vehicle's earlier trips that day in the trip history. |
+| Fees are a snapshot (see the *Fees from* column); NHAI revises them every year. | Refresh `toll_plazas.json` from the NHAI Toll Information System each year. |
+| Speeds vary randomly but there is no congestion, stops or queues. GPS error is normally distributed, with no signal loss or multipath. | Add a traffic-density speed model and GPS outages. |
 
 ## Data sources and attribution
 
