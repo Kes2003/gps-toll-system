@@ -1,0 +1,94 @@
+{
+  "description": "Toll plazas on the Coimbatore - Bangalore route (NH544 / NH44), in driving order. Fees are single-journey user fees in INR per vehicle class, as published on NHAI's Toll Information System (mirrored at goodreturns.in). tollable_km is the length of highway the plaza's fee covers. Locations are the toll booths in OpenStreetMap.",
+  "retrieved": "2026-09-25",
+  "plazas": [
+    {
+      "name": "Kaniyur",
+      "operator": "IVRCL Chengapally Tollways",
+      "nh": "NH544",
+      "stretch": "Chengapalli - Coimbatore - TN/Kerala border",
+      "location": [11.09517, 77.15143],
+      "tollable_km": 42.635,
+      "fee_effective": "2026-04-01",
+      "fees": {"car": 125, "lcv": 195, "bus": 400, "3axle": 605, "mav": 605, "oversized": 785},
+      "source": "https://www.goodreturns.in/ivrcl-chengapally-tollways-limited-kaniyur-toll-plaza-tp603.html"
+    },
+    {
+      "name": "Vijayamangalam",
+      "operator": "IVRCL",
+      "nh": "NH544",
+      "stretch": "Kumarapalayam - Chengapalli",
+      "location": [11.24584, 77.51956],
+      "tollable_km": 48.51,
+      "fee_effective": "2025-10-01",
+      "fees": {"car": 65, "lcv": 115, "bus": 235, "3axle": 375, "mav": 375, "oversized": 375},
+      "source": "https://www.goodreturns.in/vijayamangalam-toll-plaza-tp647.html"
+    },
+    {
+      "name": "Vaiguntham",
+      "operator": "",
+      "nh": "NH544",
+      "stretch": "Salem - Kumarapalayam",
+      "location": [11.51346, 77.92380],
+      "tollable_km": 53.525,
+      "fee_effective": "2025-10-01",
+      "fees": {"car": 75, "lcv": 130, "bus": 260, "3axle": 415, "mav": 415, "oversized": 415},
+      "source": "https://www.goodreturns.in/vaiguntham-toll-plaza-tp640.html"
+    },
+    {
+      "name": "Omalur (Kottagoundampatti)",
+      "operator": "",
+      "nh": "NH44",
+      "stretch": "Thumbipadi - Namakkal",
+      "location": [11.71987, 78.07325],
+      "tollable_km": 68.625,
+      "fee_effective": "2025-10-01",
+      "fees": {"car": 95, "lcv": 165, "bus": 330, "3axle": 530, "mav": 530, "oversized": 530},
+      "source": "https://www.goodreturns.in/omalur-kottagoundapatty-toll-plaza-tp621.html"
+    },
+    {
+      "name": "Thoppur (Palayam)",
+      "operator": "L&T Krishnagiri Thopur Toll Road",
+      "nh": "NH44",
+      "stretch": "Krishnagiri - Thumbipadi",
+      "location": [12.00648, 78.08046],
+      "tollable_km": 86.0,
+      "fee_effective": "2026-08-23",
+      "fees": {"car": 160, "lcv": 260, "bus": 545, "3axle": 595, "mav": 855, "oversized": 1040},
+      "source": "https://www.goodreturns.in/l-and-t-krishnagiri-thopur-palayam-toll-plaza-tp623.html"
+    },
+    {
+      "name": "Krishnagiri",
+      "operator": "",
+      "nh": "NH44",
+      "stretch": "Hosur - Krishnagiri",
+      "location": [12.54450, 78.20107],
+      "tollable_km": 59.87,
+      "fee_effective": "2026-07-10",
+      "fees": {"car": 95, "lcv": 150, "bus": 315, "3axle": 495, "mav": 495, "oversized": 600},
+      "source": "https://www.goodreturns.in/krishnagiri-toll-plaza-tp609.html"
+    },
+    {
+      "name": "Attibele",
+      "operator": "Bangalore Elevated Tollway (BETL)",
+      "nh": "NH44",
+      "stretch": "Silk Board junction - Hosur",
+      "location": [12.77670, 77.77696],
+      "tollable_km": 14.38,
+      "fee_effective": "2025-10-01",
+      "fees": {"car": 35, "lcv": 60, "bus": 120, "3axle": 250, "mav": 250, "oversized": 250},
+      "source": "https://www.goodreturns.in/attibele-betl-toll-plaza-tp246.html"
+    },
+    {
+      "name": "Electronic City (elevated)",
+      "operator": "Bangalore Elevated Tollway (BETL)",
+      "nh": "NH44",
+      "stretch": "Silk Board junction - Electronic City",
+      "location": [12.84193, 77.67549],
+      "tollable_km": 9.994,
+      "fee_effective": "2025-07-01",
+      "fees": {"car": 60, "lcv": 85, "bus": 165, "3axle": 335, "mav": 335, "oversized": 335},
+      "source": "https://www.goodreturns.in/elevated-section-electronic-city-toll-plaza-tp254.html"
+    }
+  ]
+}

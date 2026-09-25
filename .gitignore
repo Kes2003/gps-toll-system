@@ -17,3 +17,7 @@ car_path_map.html
 .idea/
 .DS_Store
 Thumbs.db
+
+# Trip history database and chart output
+trips.db
+plots/
