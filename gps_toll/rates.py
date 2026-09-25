@@ -1,12 +1,14 @@
-"""Per-km toll rates for each vehicle class on Indian national highways.
+"""Vehicle classes and their representative per-km toll rates on Indian national highways.
 
-Based on the National Highways Fee (Determination of Rates and Collection) Rules,
-2008. Rule 4 sets base rates for 2007-08 on highways of four or more lanes; Rule 5
-revises them every April (3% a year plus 40% of the rise in the wholesale price
-index). After those revisions a car pays about 1.50 INR/km, roughly 2.3 times
+The simulation charges each toll plaza's own published fee (see
+``gps_toll/data/toll_plazas.json``). The per-km rates here are the fallback for a
+plaza whose fee for a class isn't known, and describe typical rates.
+
+They are based on the National Highways Fee (Determination of Rates and Collection)
+Rules, 2008. Rule 4 sets base rates for 2007-08 on highways of four or more lanes;
+Rule 5 revises them every April (3% a year plus 40% of the rise in the wholesale
+price index). After those revisions a car pays about 1.50 INR/km, roughly 2.3 times
 its 2007-08 base rate, and the other classes below are scaled by the same factor.
-Actual fees differ from plaza to plaza (bridges, bypasses, expressways cost more),
-so these are representative rates for the simulation, not official tariffs.
 """
 
 from __future__ import annotations
@@ -20,7 +22,7 @@ class VehicleClass:
     key: str
     name: str
     base_rate_2007_per_km: float  # INR, NH Fee Rules 2008, Rule 4
-    rate_per_km: float  # INR, rate used by the simulation
+    rate_per_km: float  # INR, representative current rate
 
 
 VEHICLE_CLASSES: Dict[str, VehicleClass] = {
